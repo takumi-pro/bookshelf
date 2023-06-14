@@ -16,5 +16,18 @@
 要素の優先度に従った順に取り出されるキューのこと。
 
 
+`ACPI（Advanced Configuration and Power Interface）`
+
+コンピュータの構成や電源を管理するための規格。ACPI PM（Power Management）タイマを使用してLocalAPICタイマの周期を計測する。
+
+ACPI PMタイマを使用するには以下が必要
+- FADT
+- XSDT
+- RSDP
+
+
+
+
+
 # 参考資料
 - [江添亮のC++入門](https://ezoeryou.github.io/cpp-intro/)
