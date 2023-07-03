@@ -25,8 +25,38 @@ ACPI PMタイマを使用するには以下が必要
 - XSDT
 - RSDP
 
+FADTの場所を知るにはXSDTが必要で、XSDTの場所を知るにはRSDPを取得する必要がある。
+RSDPの場所はUEFI BIOSが知っているためブートローダ側で取得処理を記述する。カーネル側はRSDP構造体を受け取る引数をメイン関数に追加する。
 
+RSDP構造体
+```cpp
+struct RSDP {
+  char signature[8];
+  uint8_t chechsum;
+  char oem_id[6]
+  uint8_t revision;
+  uint32_t rsdt_address;
+  uint32_t lenght;
+  uint64_t xsdt_address;
+  uint8_t extended_checksum;
+  char reserved[3];
 
+  bool IsValid() const;
+} __attribute__((packed));
+```
+
+欲しい情報は`xsdt_address`
+
+## 第12章 キー入力
+前章でRSDTを取得したため本章の始まりはXSDTの取得から
+
+キー入力はUSBキーボードを対象とする。マウスと同じくHIDクラスの機器
+
+キーの判別は各キーに割り当てられた数値で行う。その数値をASCIIに変換するキーコードマップを作成して文字に変換する。
+
+Shiftキーの押下状態も受け取ってキーコードマップに反映する（新しいキーコードマップ）。
+
+HID規格ではマウスやキーボードは区別されない。情報はレポートディスクリプタに記載して送受信する。
 
 
 # 参考資料
